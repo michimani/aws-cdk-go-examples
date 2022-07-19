@@ -1,0 +1,5 @@
+{
+  "sourceLang": "en",
+  "targetLang": "ja",
+  "inputText": "Hello. This is an example implementation for using AWS CDK with the Go language."
+}
