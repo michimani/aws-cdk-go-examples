@@ -3,6 +3,12 @@ aws-cdk-go-examples
 
 This is a repository of example implementations of using AWS CDK with the Go language.
 
+## cloudformation-events-to-slack
+
+This is an example implementation of a configuration in which CloudFormation stack creation, modification, and deletion events are notified via email by Amazon SNS.
+
+Please read [cloudformation-events-to-slack/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/cloudformation-events-to-slack).
+
 ## scheduled-lambda-function
 
 This is an example implementation of a Lambda function that is executed periodically according to a schedule specified by a CRON expression.
