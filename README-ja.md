@@ -7,7 +7,7 @@ AWS CDK で Go 言語を使った場合の実装例を置いているリポジ�
 
 ## cloudformation-events-to-slack
 
-CloudFormation の Stack の作成・変更・削除のイベントを、 Amazon SNS を通じてメールで通知する構成の実装例です。
+CloudFormation Stack に関連するイベントを、 Amazon SNS を通じてメールで通知する構成の実装例です。
 
 詳細は [cloudformation-events-to-slack/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/cloudformation-events-to-slack) を読んでください。
 

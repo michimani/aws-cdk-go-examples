@@ -1,7 +1,7 @@
 cloudformation-events-to-slack
 ===
 
-CloudFormation の Stack の作成・変更・削除のイベントを、 Amazon SNS を通じてメールで通知する構成の実装例です。
+CloudFormation Stack に関連するイベント (リソースのステータス変更、スタックのステータス変更、ドリフト検出) を、 Amazon SNS を通じてメールで通知する構成の実装例です。
 
 # 主なリソース
 
@@ -15,7 +15,10 @@ CloudFormation の Stack の作成・変更・削除のイベントを、 Amazon
 
 - EventPattern
   - Source: `aws.cloudformation`
-  - Detail-Type: `CloudFormation Stack Status Change`
+  - Detail-Type:
+    - `CloudFormation Resource Status Change`
+    - `CloudFormation Stack Status Change`
+    - `CloudFormation Drift Detection Status Change`
 
 # 使い方
 
@@ -45,7 +48,7 @@ Then, you will receive a confirmation email to the email address you set up.
     export TMP_BUCKET_NAME=='your-bucket-name-for-notification-test'
     ```
 
-2. S3 Bucket 作成のための Stack をデプロイ
+2. S3 Bucket 作成のための Stack をデプロイ (通知が届きます)
 
     ```bash
     cdk synth NotificationTestStack
