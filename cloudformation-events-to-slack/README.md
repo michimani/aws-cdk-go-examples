@@ -1,7 +1,7 @@
 cloudformation-events-to-slack
 ===
 
-This is an example implementation of a configuration in which CloudFormation stack creation, modification, and deletion events are notified via email by Amazon SNS.
+This is an example implementation of a configuration in which CloudFormation Stack events (changes of resource status, stack status and drift detection status) are notified via email by Amazon SNS.
 
 # Resources
 
@@ -15,7 +15,10 @@ This is an example implementation of a configuration in which CloudFormation sta
 
 - EventPattern
   - Source: `aws.cloudformation`
-  - Detail-Type: `CloudFormation Stack Status Change`
+  - Detail-Type:
+    - `CloudFormation Resource Status Change`
+    - `CloudFormation Stack Status Change`
+    - `CloudFormation Drift Detection Status Change`
 
 # Usage
 
@@ -45,7 +48,7 @@ Then, you will receive a confirmation email to the email address you set up.
     export TMP_BUCKET_NAME=='your-bucket-name-for-notification-test'
     ```
 
-2. Deploy test stack.
+2. Deploy test stack. (will notify)
 
     ```bash
     cdk synth NotificationTestStack
