@@ -3,6 +3,8 @@ aws-cdk-go-examples
 
 This is a repository of example implementations of using AWS CDK with the Go language.
 
+# Examples
+
 ## cloudformation-events-to-slack
 
 This is an example implementation of a configuration in which CloudFormation stack creation, modification, and deletion events are notified via email by Amazon SNS.

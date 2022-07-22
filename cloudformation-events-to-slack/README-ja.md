@@ -1,9 +1,9 @@
 cloudformation-events-to-slack
 ===
 
-This is an example implementation of a configuration in which CloudFormation stack creation, modification, and deletion events are notified via email by Amazon SNS.
+CloudFormation の Stack の作成・変更・削除のイベントを、 Amazon SNS を通じてメールで通知する構成の実装例です。
 
-# Resources
+# 主なリソース
 
 ## SNS::Topic
 
@@ -17,15 +17,15 @@ This is an example implementation of a configuration in which CloudFormation sta
   - Source: `aws.cloudformation`
   - Detail-Type: `CloudFormation Stack Status Change`
 
-# Usage
+# 使い方
 
-## Set email for subscribe for environment variable
+## 通知先のメールアドレスを環境変数に設定
 
 ```bash
 export EMAIL_FOR_SUBSCRIBE='your-email@example.com'
 ```
 
-## Deploy SNS and Events Stack
+## SNS::Topic と Events::Rule を構築する Stack をデプロイ
 
 ```bash
 cdk synth CloudformationEventsToSlackStack
@@ -37,15 +37,15 @@ cdk deploy CloudformationEventsToSlackStack
 
 Then, you will receive a confirmation email to the email address you set up.
 
-## Deploy test stack for receiving notification (create a S3 Bucket)
+## 通知のテストのための Stack をデプロイ (S3 バケットを作成)
 
-1. Set bucket name for environment variable.
+1. 作成する S3 Bucket のバケット名を環境変数に設定
 
     ```bash
     export TMP_BUCKET_NAME=='your-bucket-name-for-notification-test'
     ```
 
-2. Deploy test stack.
+2. S3 Bucket 作成のための Stack をデプロイ
 
     ```bash
     cdk synth NotificationTestStack
