@@ -23,6 +23,10 @@ This is an example implementation of building a StepFunctions state machine that
 
 Please read [step-functions-with-sdk-integration/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/step-functions-with-sdk-integration).
 
+# Memo
+
+[AWS CDK を Go で書いたときのメモ - zenn](https://zenn.dev/michimani/scraps/3fb7f8675ef22e)
+
 # License
 
 [MIT](https://github.com/michimani/aws-cdk-go-examples/blob/main/LICENSE)
