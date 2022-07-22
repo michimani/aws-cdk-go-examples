@@ -23,6 +23,10 @@ StepFunctions でいくつかの AWS SDK インテグレーションを利用し
 
 詳細は [step-functions-with-sdk-integration/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/step-functions-with-sdk-integration) を読んでください。
 
+# Memo
+
+[AWS CDK を Go で書いたときのメモ - zenn](https://zenn.dev/michimani/scraps/3fb7f8675ef22e)
+
 # License
 
 [MIT](https://github.com/michimani/aws-cdk-go-examples/blob/main/LICENSE)
