@@ -2,6 +2,7 @@ package main
 
 import (
 	"cloudformation-events-to-slack/resource"
+	"fmt"
 	"os"
 
 	"github.com/aws/aws-cdk-go/awscdk/v2"
@@ -12,7 +13,11 @@ type CloudformationEventsToSlackStackProps struct {
 	awscdk.StackProps
 }
 
-type NotificationTestStack struct {
+type NotificationTestStackProps struct {
+	awscdk.StackProps
+}
+
+type NotNotificationTestStackProps struct {
 	awscdk.StackProps
 }
 
@@ -29,13 +34,16 @@ func NewCloudformationEventsToSlackStack(scope constructs.Construct, id string, 
 	email := os.Getenv(emailEnvKey)
 	topic := resource.NewSNSTopicForSlackNotification(stack, email)
 
-	resource.NewEventsRuleOfCloudFormationEvents(stack, topic)
+	// Create a rule to notify only events related to a specific Stack.
+	// If you want to be notified of all Stack-related events,
+	// use `NewEventsRuleOfAllCloudFormationEvents` instead.
+	resource.NewEventsRuleOfSpecifiedCloudFormationEvents(stack, topic)
 
 	return stack
 }
 
 // Create a stack for notification test.
-func NewNotificationTestStack(scope constructs.Construct, id string, props *NotificationTestStack) awscdk.Stack {
+func NewNotificationTestStack(scope constructs.Construct, id string, props *NotificationTestStackProps) awscdk.Stack {
 	var sprops awscdk.StackProps
 	if props != nil {
 		sprops = props.StackProps
@@ -43,6 +51,20 @@ func NewNotificationTestStack(scope constructs.Construct, id string, props *Noti
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
 	bucketName := os.Getenv(temporaryBucketNameEnvKey)
+	resource.NewTemporaryBucket(stack, bucketName)
+
+	return stack
+}
+
+// Create a stack for notification test. (will not notify)
+func NewNotNotificationTestStack(scope constructs.Construct, id string, props *NotNotificationTestStackProps) awscdk.Stack {
+	var sprops awscdk.StackProps
+	if props != nil {
+		sprops = props.StackProps
+	}
+	stack := awscdk.NewStack(scope, &id, &sprops)
+
+	bucketName := fmt.Sprintf("%s-not-notify", os.Getenv(temporaryBucketNameEnvKey))
 	resource.NewTemporaryBucket(stack, bucketName)
 
 	return stack
@@ -57,7 +79,15 @@ func main() {
 		},
 	})
 
-	NewNotificationTestStack(app, "NotificationTestStack", &NotificationTestStack{
+	// events will notify
+	NewNotificationTestStack(app, "NotificationTestStack", &NotificationTestStackProps{
+		awscdk.StackProps{
+			Env: env(),
+		},
+	})
+
+	// events will NOT notify
+	NewNotNotificationTestStack(app, "NotNotificationTestStack", &NotNotificationTestStackProps{
 		awscdk.StackProps{
 			Env: env(),
 		},

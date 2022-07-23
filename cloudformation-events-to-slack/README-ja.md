@@ -1,11 +1,17 @@
 cloudformation-events-to-slack
 ===
 
-CloudFormation Stack に関連するイベント (リソースのステータス変更、スタックのステータス変更、ドリフト検出) を、 Amazon SNS を通じてメールで通知する構成の実装例です。
+特定の CloudFormation Stack に関連するイベント (リソースのステータス変更、スタックのステータス変更、ドリフト検出) を、 Amazon SNS を通じてメールで通知する構成の実装例です。
 
 # 主なリソース
 
 ## SNS::Topic
+
+## SNS::TopicPolicy
+
+- Action: `sns:Publish`
+- Effect: `Allow`
+- Principal: `events.amazonaws.com`
 
 ## SNS::Subscription
 
@@ -19,6 +25,8 @@ CloudFormation Stack に関連するイベント (リソースのステータス
     - `CloudFormation Resource Status Change`
     - `CloudFormation Stack Status Change`
     - `CloudFormation Drift Detection Status Change`
+  - Resource:
+    - `NotificationTest` をプレフィックスに持つ Stack
 
 # 使い方
 
@@ -56,6 +64,16 @@ Then, you will receive a confirmation email to the email address you set up.
 
     ```bash
     cdk deploy NotificationTestStack
+    ```
+
+3. S3 Bucket 作成のための Stack をデプロイ (Stack 名が EventPattern とマッチしないため通知が届きません)
+
+    ```bash
+    cdk synth NotNotificationTestStack
+    ```
+
+    ```bash
+    cdk deploy NotNotificationTestStack
     ```
 
 # Author
