@@ -1,11 +1,17 @@
 cloudformation-events-to-slack
 ===
 
-This is an example implementation of a configuration in which CloudFormation Stack events (changes of resource status, stack status and drift detection status) are notified via email by Amazon SNS.
+This is an example implementation of a configuration in which specified CloudFormation Stack events (changes of resource status, stack status and drift detection status) are notified via email by Amazon SNS.
 
 # Resources
 
 ## SNS::Topic
+
+## SNS::TopicPolicy
+
+- Action: `sns:Publish`
+- Effect: `Allow`
+- Principal: `events.amazonaws.com`
 
 ## SNS::Subscription
 
@@ -19,6 +25,8 @@ This is an example implementation of a configuration in which CloudFormation Sta
     - `CloudFormation Resource Status Change`
     - `CloudFormation Stack Status Change`
     - `CloudFormation Drift Detection Status Change`
+  - Resources:
+    - has prefix `NotificationTest`
 
 # Usage
 
@@ -56,6 +64,16 @@ Then, you will receive a confirmation email to the email address you set up.
 
     ```bash
     cdk deploy NotificationTestStack
+    ```
+
+3. Deploy test stack. (will NOT notify)
+
+    ```bash
+    cdk synth NotNotificationTestStack
+    ```
+
+    ```bash
+    cdk deploy NotNotificationTestStack
     ```
 
 # Author

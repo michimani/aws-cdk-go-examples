@@ -7,7 +7,7 @@ This is a repository of example implementations of using AWS CDK with the Go lan
 
 ## cloudformation-events-to-slack
 
-This is an example implementation of a configuration in which CloudFormation stack events are notified via email by Amazon SNS.
+This is an example implementation of a configuration in which specified CloudFormation stack events are notified via email by Amazon SNS.
 
 Please read [cloudformation-events-to-slack/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/cloudformation-events-to-slack).
 
