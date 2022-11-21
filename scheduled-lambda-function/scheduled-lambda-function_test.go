@@ -11,7 +11,7 @@ import (
 func TestScheduledLambdaFunctionStack_HelloFunction(t *testing.T) {
 	app := awscdk.NewApp(nil)
 	stack := NewScheduledLambdaFunctionStack(app, "TestStack", nil)
-	template := assertions.Template_FromStack(stack)
+	template := assertions.Template_FromStack(stack, &assertions.TemplateParsingOptions{})
 
 	// Lambda Function
 	template.HasResourceProperties(jsii.String("AWS::Lambda::Function"), map[string]interface{}{
@@ -27,7 +27,7 @@ func TestScheduledLambdaFunctionStack_HelloFunction(t *testing.T) {
 func TestScheduledLambdaFunctionStack_EventsRule(t *testing.T) {
 	app := awscdk.NewApp(nil)
 	stack := NewScheduledLambdaFunctionStack(app, "TestStack", nil)
-	template := assertions.Template_FromStack(stack)
+	template := assertions.Template_FromStack(stack, &assertions.TemplateParsingOptions{})
 
 	// EventBridge Rule
 	template.HasResourceProperties(jsii.String("AWS::Events::Rule"), map[string]interface{}{
