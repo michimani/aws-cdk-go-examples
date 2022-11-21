@@ -12,7 +12,7 @@ import (
 func TestStepFunctionsWithSdkIntegrationStack_OutputBucket(t *testing.T) {
 	app := awscdk.NewApp(nil)
 	stack := NewStepFunctionsWithSdkIntegrationStack(app, "TestStack", nil)
-	template := assertions.Template_FromStack(stack)
+	template := assertions.Template_FromStack(stack, &assertions.TemplateParsingOptions{})
 
 	bucketName := os.Getenv(bucketNameEnvKey)
 
@@ -25,7 +25,7 @@ func TestStepFunctionsWithSdkIntegrationStack_OutputBucket(t *testing.T) {
 func TestStepFunctionsWithSdkIntegrationStack_LogGroup(t *testing.T) {
 	app := awscdk.NewApp(nil)
 	stack := NewStepFunctionsWithSdkIntegrationStack(app, "TestStack", nil)
-	template := assertions.Template_FromStack(stack)
+	template := assertions.Template_FromStack(stack, &assertions.TemplateParsingOptions{})
 
 	// CloudWatch Logs LogGroup
 	template.HasResourceProperties(jsii.String("AWS::Logs::LogGroup"), map[string]interface{}{
@@ -36,7 +36,7 @@ func TestStepFunctionsWithSdkIntegrationStack_LogGroup(t *testing.T) {
 func TestStepFunctionsWithSdkIntegrationStack_StateMachine(t *testing.T) {
 	app := awscdk.NewApp(nil)
 	stack := NewStepFunctionsWithSdkIntegrationStack(app, "TestStack", nil)
-	template := assertions.Template_FromStack(stack)
+	template := assertions.Template_FromStack(stack, &assertions.TemplateParsingOptions{})
 
 	// StepFunctions StateMachine
 	template.HasResourceProperties(jsii.String("AWS::StepFunctions::StateMachine"), map[string]interface{}{
