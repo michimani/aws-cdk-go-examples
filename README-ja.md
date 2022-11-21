@@ -11,6 +11,12 @@ AWS CDK で Go 言語を使った場合の実装例を置いているリポジ�
 
 詳細は [cloudformation-events-to-slack/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/cloudformation-events-to-slack) を読んでください。
 
+## eventbridge-scheduler-cfn
+
+EventBridge Scheduler で設定したスケジュールによって Lambda 関数を定期実行する構成の実装例です。 Scheduler のリソースは `CfnResource` を使って定義します。
+
+詳細は [eventbridge-scheduler-cfn/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/eventbridge-scheduler-cfn) を読んでください。
+
 ## scheduled-lambda-function
 
 Lambda 関数を EventBridge で設定した CRON 式によって定期実行する構成の実装例です。

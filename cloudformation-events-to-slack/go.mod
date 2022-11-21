@@ -1,6 +1,6 @@
 module cloudformation-events-to-slack
 
-go 1.18
+go 1.19
 
 require (
 	github.com/aws/aws-cdk-go/awscdk/v2 v2.32.0
