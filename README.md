@@ -11,6 +11,13 @@ This is an example implementation of a configuration in which specified CloudFor
 
 Please read [cloudformation-events-to-slack/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/cloudformation-events-to-slack).
 
+## eventbridge-scheduler-cfn
+
+This is an example implementation of building a Lambda Function that is executed periodically by EventBridge Scheduler. 
+Scheduler resources are defined by `CfnResource`.
+
+Please read [eventbridge-scheduler-cfn/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/eventbridge-scheduler-cfn).
+
 ## scheduled-lambda-function
 
 This is an example implementation of a Lambda function that is executed periodically according to a schedule specified by a CRON expression.
