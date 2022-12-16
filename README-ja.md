@@ -23,6 +23,12 @@ Lambda 関数を EventBridge で設定した CRON 式によって定期実行す
 
 詳細は [scheduled-lambda-function/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/scheduled-lambda-function) を読んでください。
 
+## sqs-to-lambda-with-dlq
+
+デッドレターキューを設定した SQS Queue へのメッセージ送信をトリガーに起動する Lambda 関数と、 デッドレターキューを処理する別の Lambda 関数を構成する実装例です。
+
+詳細は [sqs-to-lambda-with-dlq/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/sqs-to-lambda-with-dlq) を読んでください。
+
 ## step-functions-with-sdk-integration
 
 StepFunctions でいくつかの AWS SDK インテグレーションを利用したステートマシンを構築する実装例です。

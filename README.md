@@ -24,6 +24,12 @@ This is an example implementation of a Lambda function that is executed periodic
 
 Please read [scheduled-lambda-function/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/scheduled-lambda-function).
 
+## sqs-to-lambda-with-dlq
+
+This is an example implementation of a Lambda function triggered by an SQS message; if the Lambda function fails, the message is sent to the Dead Letter Queue, and another Lambda function processes the message sent to the Dead Letter Queue.
+
+Please read [sqs-to-lambda-with-dlq/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/sqs-to-lambda-with-dlq).
+
 ## step-functions-with-sdk-integration
 
 This is an example implementation of building a StepFunctions state machine that translates text using some AWS SDK integration.
