@@ -28,6 +28,20 @@ This is an example implementation of a configuration in which specified CloudFor
   - Resources:
     - has prefix `NotificationTest`
 
+# Architecture
+
+```mermaid
+sequenceDiagram
+  participant cfn as CloudFormation
+  participant sns as SNS Topic
+  participant email as Subscription (Email)
+  
+  loop
+    cfn ->> sns: Stack event
+    sns ->> email: publish
+  end
+```
+
 # Usage
 
 ## Set email for subscribe for environment variable
