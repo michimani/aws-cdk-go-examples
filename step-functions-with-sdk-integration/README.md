@@ -20,6 +20,31 @@ This is an example implementation of building a StepFunctions state machine that
   - Translate: translateText
   - S3: putObject
 
+# Architecture
+
+```mermaid
+sequenceDiagram
+  participant c as Client
+  participant sm as Step Functions StateMachine
+  participant init as Init State
+  participant translate as Translate State
+  participant sdk as Amazon Translate SDK
+  participant output as Output State
+  participant s3 as S3 Bucket
+  
+  c ->> sm: Start Execution
+  Note left of sm: {<br>  "sourceLang":"en",<br>  "targetLang":"ja",<br>  "inputText":"Hello"<br>}
+  sm ->> init: props
+  init ->> translate: props
+  translate ->> sdk: translate:TranslateText
+  sdk ->> translate: result
+  translate ->> output: translate result
+  output ->> s3: s3:PutObject
+  c ->> s3: GetObject
+  s3 ->> c: こんにちは
+
+```
+
 # Usage
 
 ## Set name of S3 Bucket for environment variable

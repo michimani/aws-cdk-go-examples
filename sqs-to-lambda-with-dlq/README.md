@@ -35,6 +35,39 @@ This is an example implementation of a Lambda function triggered by an SQS messa
 
 - Events the received message and invokes the Lambda function handling dead letter queue message.
 
+# Architecture
+
+```mermaid
+sequenceDiagram
+  participant c as Client
+  participant sqsMain as SQS Queue (main)
+  participant lMain as Lambda Function (main)
+  participant sqsDLQ as SQS Queue (Dead Letter Queue)
+  participant lDLQ as Lambda Function (handling DLQ message)
+  
+  c ->> sqsMain: SendMessage `{throwMessage: bool}`
+  sqsMain ->> lMain: Invoke Function
+  
+  alt throwMessage == false
+    lMain ->> lMain: write INFO log
+    lMain -->> sqsMain: dequeue
+  end
+  
+  alt throwMessage == true
+    lMain ->> lMain: write ERROR log
+    
+    loop 3 times
+      sqsMain ->> lMain: Invoke
+      lMain ->> lMain: write ERROR log
+    end
+    
+    sqsMain ->> sqsDLQ: Move Message
+    sqsDLQ ->> lDLQ: Invoke
+    lDLQ ->> lDLQ: write INFO log
+    lDLQ -->> sqsDLQ: dequeue
+  end
+```
+
 # Usage
 
 ## Build the function
