@@ -13,7 +13,7 @@ import (
 
 var (
 	memory                float64 = 128
-	lambdaFunctionTimeout float64 = 30 * 1000 // 30 sec
+	lambdaFunctionTimeout float64 = 5 * 1000 // 30 sec
 )
 
 type NewLambdaFunctionInput struct {
@@ -42,7 +42,7 @@ func NewSQSToLambdaEventSourceMapping(stack constructs.Construct, id string, lf 
 			jsii.String("sqs:GetQueueAttributes"),
 		},
 		Resources: &[]*string{
-			jsii.String("arn:aws:sqs:*:*:aws-cdk-go-example-*"),
+			sq.QueueArn(),
 		},
 	}))
 
