@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/lambdacontext"
 )
@@ -27,10 +28,14 @@ type okBody struct {
 	Time      string `json:"time"`
 }
 
-func handleRequest(ctx context.Context) (response, error) {
+func handleRequest(ctx context.Context, httpRequest events.APIGatewayProxyRequest) (response, error) {
 	lctx, ok := lambdacontext.FromContext(ctx)
 	if !ok {
 		return jsonResponse(http.StatusInternalServerError, errorBody{Error: "failed to parse lambda context"}, nil)
+	}
+
+	if !isAvailableAccess(httpRequest) {
+		return jsonResponse(http.StatusForbidden, errorBody{Error: "forbidden"}, nil)
 	}
 
 	body := okBody{
@@ -44,6 +49,24 @@ func handleRequest(ctx context.Context) (response, error) {
 	}
 
 	return jsonResponse(http.StatusOK, body, customHeader)
+}
+
+const (
+	customHeaderKeyFromCloudFront   string = "x-aws-cdk-go-example-from"
+	customHeaderValueFromCloudFront string = "aws-cdk-go-example-cfn"
+)
+
+func isAvailableAccess(req events.APIGatewayProxyRequest) bool {
+	// invoke from specified CloudFront
+	if h, ok := req.Headers[customHeaderKeyFromCloudFront]; !ok {
+		fmt.Printf("custom header %s does not exists. req:%v", customHeaderKeyFromCloudFront, req)
+		return false
+	} else if h != customHeaderValueFromCloudFront {
+		fmt.Printf("custom header value is invalid. req:%v", req)
+		return false
+	}
+
+	return true
 }
 
 func jsonResponse(statusCode int, body any, additionalHeaders map[string]string) (response, error) {

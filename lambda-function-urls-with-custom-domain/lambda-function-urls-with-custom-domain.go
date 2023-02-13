@@ -28,7 +28,12 @@ func NewLambdaFunctionUrlsWithCustomDomainStack(scope constructs.Construct, id s
 	})
 
 	// create function url
-	_ = resource.NewFunctionURL(stack, lfn)
+	furl := resource.NewFunctionURL(stack, lfn)
+
+	// cloudfront distribution
+	resource.CreateCloudFrontDistributionForFunctionURLs(stack, &resource.CreateCloudFrontDistributionInput{
+		FunctionURL: furl,
+	})
 
 	return stack
 }

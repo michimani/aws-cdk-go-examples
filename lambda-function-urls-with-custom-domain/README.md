@@ -11,6 +11,14 @@ lambda-function-urls-with-custom-domain
 - Operation:
   - returns simple JSON response
 
+## AWS::Lambda::Url
+
+## CloudFront::Distribution
+
+## CloudFront::OriginRequestPolicy
+
+## AWS::CloudFront::CachePolicy
+
 # Components
 
 TBD
