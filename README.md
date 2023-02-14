@@ -18,6 +18,12 @@ Scheduler resources are defined by `CfnResource`.
 
 Please read [eventbridge-scheduler-cfn/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/eventbridge-scheduler-cfn).
 
+## lambda-function-urls-with-custom-domain
+
+This is an example implementation of calling a Lambda Function URL with a custom domain.
+
+Please read [lambda-function-urls-with-custom-domain/README.md](https://github.com/michimani/aws-cdk-go-examples/blob/main/lambda-function-urls-with-custom-domain).
+
 ## scheduled-lambda-function
 
 This is an example implementation of a Lambda function that is executed periodically according to a schedule specified by a CRON expression.
