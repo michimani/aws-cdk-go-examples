@@ -53,7 +53,7 @@ func handleRequest(ctx context.Context, httpRequest events.APIGatewayProxyReques
 
 const (
 	customHeaderKeyFromCloudFront   string = "x-aws-cdk-go-example-from"
-	customHeaderValueFromCloudFront string = "aws-cdk-go-example-cfn"
+	customHeaderValueFromCloudFront string = "aws-cdk-go-example-cf"
 )
 
 func isAvailableAccess(req events.APIGatewayProxyRequest) bool {

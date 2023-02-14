@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	cfnIDPrefix string = "AWSCDKGoExampleFunctionURLFunctionCFn"
+	cfIDPrefix string = "AWSCDKGoExampleFunctionURLFunctionCF"
 )
 
 type NewCloudFrontDistributionInput struct {
@@ -29,7 +29,7 @@ var slash = "/"
 
 func NewCloudFrontDistributionForFunctionURLs(scope constructs.Construct, in *NewCloudFrontDistributionInput) awscloudfront.Distribution {
 	customHeaderForFunction := map[string]*string{
-		"x-aws-cdk-go-example-from": jsii.String("aws-cdk-go-example-cfn"),
+		"x-aws-cdk-go-example-from": jsii.String("aws-cdk-go-example-cf"),
 	}
 
 	// function url format: https://hoge.lambda-url.ap-northeast-1.on.aws/
@@ -70,12 +70,12 @@ func NewCloudFrontDistributionForFunctionURLs(scope constructs.Construct, in *Ne
 		props.EnableLogging = jsii.Bool(true)
 	}
 
-	return awscloudfront.NewDistribution(scope, jsii.String(fmt.Sprintf("%sDistribution", cfnIDPrefix)), props)
+	return awscloudfront.NewDistribution(scope, jsii.String(fmt.Sprintf("%sDistribution", cfIDPrefix)), props)
 }
 
 func createOriginRequestPolicy(scope constructs.Construct) awscloudfront.OriginRequestPolicy {
-	return awscloudfront.NewOriginRequestPolicy(scope, jsii.String(fmt.Sprintf("%sOriginRequestPolicy", cfnIDPrefix)), &awscloudfront.OriginRequestPolicyProps{
-		OriginRequestPolicyName: jsii.String("aws-cdk-go-example-furl-cfn-orp"),
+	return awscloudfront.NewOriginRequestPolicy(scope, jsii.String(fmt.Sprintf("%sOriginRequestPolicy", cfIDPrefix)), &awscloudfront.OriginRequestPolicyProps{
+		OriginRequestPolicyName: jsii.String("aws-cdk-go-example-furl-cf-orp"),
 		HeaderBehavior:          awscloudfront.OriginRequestHeaderBehavior_None(),
 	})
 }
@@ -88,8 +88,8 @@ const (
 )
 
 func createCachePolicy(scope constructs.Construct) awscloudfront.CachePolicy {
-	return awscloudfront.NewCachePolicy(scope, jsii.String(fmt.Sprintf("%sCachePolicy", cfnIDPrefix)), &awscloudfront.CachePolicyProps{
-		CachePolicyName:            jsii.String("aws-cdk-go-example-furl-cfn-cp"),
+	return awscloudfront.NewCachePolicy(scope, jsii.String(fmt.Sprintf("%sCachePolicy", cfIDPrefix)), &awscloudfront.CachePolicyProps{
+		CachePolicyName:            jsii.String("aws-cdk-go-example-furl-cf-cp"),
 		DefaultTtl:                 awscdk.Duration_Seconds(jsii.Number(cacheDefault)),
 		MaxTtl:                     awscdk.Duration_Seconds(jsii.Number(cacheMax)),
 		MinTtl:                     awscdk.Duration_Seconds(jsii.Number(cacheMin)),
