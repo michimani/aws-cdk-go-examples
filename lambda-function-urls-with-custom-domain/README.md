@@ -1,6 +1,8 @@
 lambda-function-urls-with-custom-domain
 ===
 
+This is an example implementation of calling a Lambda Function URL with a custom domain.
+
 # Resources
 
 ## Lambda::Function
