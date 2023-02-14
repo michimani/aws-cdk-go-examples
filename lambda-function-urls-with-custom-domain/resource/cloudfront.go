@@ -17,7 +17,7 @@ const (
 	cfnIDPrefix string = "AWSCDKGoExampleFunctionURLFunctionCFn"
 )
 
-type CreateCloudFrontDistributionInput struct {
+type NewCloudFrontDistributionInput struct {
 	Certificate awscertificatemanager.Certificate
 	DomainName  string
 	LogBucket   awss3.Bucket
@@ -27,7 +27,7 @@ type CreateCloudFrontDistributionInput struct {
 // separator for function url
 var slash = "/"
 
-func CreateCloudFrontDistributionForFunctionURLs(scope constructs.Construct, in *CreateCloudFrontDistributionInput) {
+func NewCloudFrontDistributionForFunctionURLs(scope constructs.Construct, in *NewCloudFrontDistributionInput) awscloudfront.Distribution {
 	customHeaderForFunction := map[string]*string{
 		"x-aws-cdk-go-example-from": jsii.String("aws-cdk-go-example-cfn"),
 	}
@@ -70,7 +70,7 @@ func CreateCloudFrontDistributionForFunctionURLs(scope constructs.Construct, in 
 		props.EnableLogging = jsii.Bool(true)
 	}
 
-	awscloudfront.NewDistribution(scope, jsii.String(fmt.Sprintf("%sDistribution", cfnIDPrefix)), props)
+	return awscloudfront.NewDistribution(scope, jsii.String(fmt.Sprintf("%sDistribution", cfnIDPrefix)), props)
 }
 
 func createOriginRequestPolicy(scope constructs.Construct) awscloudfront.OriginRequestPolicy {
