@@ -18,7 +18,7 @@ const (
 )
 
 type NewCloudFrontDistributionInput struct {
-	Certificate awscertificatemanager.Certificate
+	Certificate awscertificatemanager.ICertificate
 	DomainName  string
 	LogBucket   awss3.Bucket
 	FunctionURL awslambda.FunctionUrl

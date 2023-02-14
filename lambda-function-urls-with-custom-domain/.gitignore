@@ -20,3 +20,6 @@ cdk.out
 
 # Built Lambda Function code
 src/**/bin
+
+# env
+.env
