@@ -14,11 +14,8 @@ const (
 	route53IDPrefix string = "AWSCDKGoExampleFunctionURLFunctionRoute53"
 )
 
+// ChangeRoute53ResourceRecordSetForCloudFront create Route53:RecordSet that connect custom domain to CloudFront domain.
 func ChangeRoute53ResourceRecordSetForCloudFront(scope constructs.Construct, dist awscloudfront.Distribution, hostZoneID string, domainName string, subDomain string) {
-	// hostZone := awsroute53.HostedZone_FromHostedZoneId(scope, jsii.String(fmt.Sprintf("%sMyHostZone", route53IDPrefix)), jsii.String(hostZoneID))
-	// hostZone := awsroute53.HostedZone_FromLookup(scope, jsii.String(fmt.Sprintf("%sMyHostZone", route53IDPrefix)), &awsroute53.HostedZoneProviderProps{
-	// 	DomainName: jsii.String(domainName),
-	// })
 	hostZone := awsroute53.HostedZone_FromHostedZoneAttributes(scope, jsii.String(fmt.Sprintf("%sMyHostZone", route53IDPrefix)), &awsroute53.HostedZoneAttributes{
 		HostedZoneId: &hostZoneID,
 		ZoneName:     &domainName,

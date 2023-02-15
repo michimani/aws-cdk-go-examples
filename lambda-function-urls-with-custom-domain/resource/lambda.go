@@ -17,6 +17,7 @@ type NewLambdaFunctionInput struct {
 	Timeout      float64
 }
 
+// NewLambdaFunction creates Lambda:Function.
 func NewLambdaFunction(scope constructs.Construct, in *NewLambdaFunctionInput) awslambda.Function {
 	props := &awslambda.FunctionProps{
 		FunctionName: jsii.String(fmt.Sprintf("aws-cdk-go-example-%s", in.FunctionName)),
@@ -32,6 +33,7 @@ func NewLambdaFunction(scope constructs.Construct, in *NewLambdaFunctionInput) a
 	return awslambda.NewFunction(scope, id, props)
 }
 
+// NewFunctionURL creates Lambda:URL of lfn.
 func NewFunctionURL(scope constructs.Construct, lfn awslambda.Function) awslambda.FunctionUrl {
 	props := &awslambda.FunctionUrlProps{
 		Function: lfn,
