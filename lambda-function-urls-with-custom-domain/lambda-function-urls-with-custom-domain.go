@@ -25,23 +25,40 @@ func NewLambdaFunctionUrlsWithCustomDomainStack(scope constructs.Construct, id s
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
-	// create lambda function
-	lfn := resource.NewLambdaFunction(stack, &resource.NewLambdaFunctionInput{
-		FunctionName: "simple-response",
+	// create lambda function for default behavior
+	defaultFn := resource.NewLambdaFunction(stack, &resource.NewLambdaFunctionInput{
+		FunctionName: "simple-response-default",
 		CodePath:     "./src/lambda/simple-response/bin/default",
 		Memory:       128,
 		Timeout:      10,
 	})
 
 	// create function url for default behavior
-	defaultFnURL := resource.NewFunctionURL(stack, lfn)
+	defaultFnURL := resource.NewFunctionURL(stack, defaultFn)
+
+	additionalFuURLs := []resource.FunctionURLPattern{}
+	additionalBehaviorPatterns := []string{"hello", "bye"}
+	for _, p := range additionalBehaviorPatterns {
+		fn := resource.NewLambdaFunction(stack, &resource.NewLambdaFunctionInput{
+			FunctionName: "simple-response-" + p,
+			CodePath:     "./src/lambda/simple-response/bin/" + p,
+			Memory:       128,
+			Timeout:      10,
+		})
+		fnURL := resource.NewFunctionURL(stack, fn)
+		additionalFuURLs = append(additionalFuURLs, resource.FunctionURLPattern{
+			Pattern:     p,
+			FunctionURL: fnURL,
+		})
+	}
 
 	// cloudfront distribution
 	ceritificate := awscertificatemanager.Certificate_FromCertificateArn(stack, jsii.String("AWSCDKGoExampleFunctionURLFunctionACMCertificate"), &props.CertificateARN)
 	dist := resource.NewCloudFrontDistributionForFunctionURLs(stack, &resource.NewCloudFrontDistributionInput{
-		Certificate:        ceritificate,
-		DomainName:         props.CustomDomainName,
-		DefaultFunctionURL: defaultFnURL,
+		Certificate:            ceritificate,
+		DomainName:             props.CustomDomainName,
+		DefaultFunctionURL:     defaultFnURL,
+		AdditionalFunctionURLs: additionalFuURLs,
 	})
 
 	// route 53 record set
