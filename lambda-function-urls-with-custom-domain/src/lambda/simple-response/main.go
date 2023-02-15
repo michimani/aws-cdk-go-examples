@@ -12,6 +12,9 @@ import (
 	"github.com/aws/aws-lambda-go/lambdacontext"
 )
 
+// message is string for response set at build
+var message string
+
 type response struct {
 	StatusCode int               `json:"statusCode"`
 	Headers    map[string]string `json:"headers"`
@@ -40,7 +43,7 @@ func handleRequest(ctx context.Context, httpRequest events.APIGatewayProxyReques
 
 	body := okBody{
 		RequestID: lctx.AwsRequestID,
-		Message:   "Hello Lambda!",
+		Message:   message,
 		Time:      time.Now().Format(time.RFC3339Nano),
 	}
 

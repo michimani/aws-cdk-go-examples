@@ -13,7 +13,7 @@ func TestLambdaFunction(t *testing.T) {
 	app := awscdk.NewApp(nil)
 
 	// WHEN
-	stack := NewLambdaFunctionUrlsWithCustomDomainStack(app, "TestStack", nil)
+	stack := NewLambdaFunctionUrlsWithCustomDomainStack(app, "TestStack", &LambdaFunctionUrlsWithCustomDomainStackProps{})
 
 	// THEN
 	template := assertions.Template_FromStack(stack, nil)
@@ -32,9 +32,29 @@ func TestLambdaFunction(t *testing.T) {
 		expect expect
 	}{
 		{
-			name: "simple-response function",
+			name: "simple-response-default function",
 			expect: expect{
-				functionName: "aws-cdk-go-example-simple-response",
+				functionName: "aws-cdk-go-example-simple-response-default",
+				runtime:      "go1.x",
+				handler:      "main",
+				memory:       128,
+				timeout:      10,
+			},
+		},
+		{
+			name: "simple-response-hello function",
+			expect: expect{
+				functionName: "aws-cdk-go-example-simple-response-hello",
+				runtime:      "go1.x",
+				handler:      "main",
+				memory:       128,
+				timeout:      10,
+			},
+		},
+		{
+			name: "simple-response-bye function",
+			expect: expect{
+				functionName: "aws-cdk-go-example-simple-response-bye",
 				runtime:      "go1.x",
 				handler:      "main",
 				memory:       128,
