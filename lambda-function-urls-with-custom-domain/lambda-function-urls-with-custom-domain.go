@@ -28,20 +28,20 @@ func NewLambdaFunctionUrlsWithCustomDomainStack(scope constructs.Construct, id s
 	// create lambda function
 	lfn := resource.NewLambdaFunction(stack, &resource.NewLambdaFunctionInput{
 		FunctionName: "simple-response",
-		CodePath:     "./src/lambda/simple-response/bin",
+		CodePath:     "./src/lambda/simple-response/bin/default",
 		Memory:       128,
 		Timeout:      10,
 	})
 
-	// create function url
-	furl := resource.NewFunctionURL(stack, lfn)
+	// create function url for default behavior
+	defaultFnURL := resource.NewFunctionURL(stack, lfn)
 
 	// cloudfront distribution
 	ceritificate := awscertificatemanager.Certificate_FromCertificateArn(stack, jsii.String("AWSCDKGoExampleFunctionURLFunctionACMCertificate"), &props.CertificateARN)
 	dist := resource.NewCloudFrontDistributionForFunctionURLs(stack, &resource.NewCloudFrontDistributionInput{
-		Certificate: ceritificate,
-		DomainName:  props.CustomDomainName,
-		FunctionURL: furl,
+		Certificate:        ceritificate,
+		DomainName:         props.CustomDomainName,
+		DefaultFunctionURL: defaultFnURL,
 	})
 
 	// route 53 record set

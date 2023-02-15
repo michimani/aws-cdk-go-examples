@@ -17,25 +17,31 @@ const (
 	cfIDPrefix string = "AWSCDKGoExampleFunctionURLFunctionCF"
 )
 
+// NewCloudFrontDistributionInput is struct of input for create CloudFront:Distribution.
 type NewCloudFrontDistributionInput struct {
-	Certificate awscertificatemanager.ICertificate
-	DomainName  string
-	LogBucket   awss3.Bucket
-	FunctionURL awslambda.FunctionUrl
+	Certificate        awscertificatemanager.ICertificate
+	DomainName         string
+	LogBucket          awss3.Bucket
+	DefaultFunctionURL awslambda.FunctionUrl
 }
 
 // separator for function url
 var slash = "/"
 
+func functionURLDomain(furl awslambda.FunctionUrl) *string {
+	// function url format: https://hoge.lambda-url.ap-northeast-1.on.aws/
+	// split: ["https:", "", "hoge.lambda-url.ap-northeast-1.on.aws", ""]
+	splitURL := awscdk.Fn_Split(&slash, furl.Url(), jsii.Number(4))
+	return (*splitURL)[2]
+}
+
+// NewCloudFrontDistributionForFunctionURLs creates CloudFront:Distribution.
 func NewCloudFrontDistributionForFunctionURLs(scope constructs.Construct, in *NewCloudFrontDistributionInput) awscloudfront.Distribution {
 	customHeaderForFunction := map[string]*string{
 		"x-aws-cdk-go-example-from": jsii.String("aws-cdk-go-example-cf"),
 	}
 
-	// function url format: https://hoge.lambda-url.ap-northeast-1.on.aws/
-	// split: ["https:", "", "hoge.lambda-url.ap-northeast-1.on.aws", ""]
-	splitURL := awscdk.Fn_Split(&slash, in.FunctionURL.Url(), jsii.Number(4))
-	functionURLDomain := (*splitURL)[2]
+	functionURLDomain := functionURLDomain(in.DefaultFunctionURL)
 
 	props := &awscloudfront.DistributionProps{
 		Enabled: jsii.Bool(true),
